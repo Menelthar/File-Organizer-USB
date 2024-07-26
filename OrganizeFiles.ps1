@@ -1,10 +1,10 @@
-param(
+param (
     [string]$sourceDirectory = "I:\",
     [string]$logDirectory = "I:\logs"
 )
 
-Write-Host "Bienvenido al script de organizacion de archivos."
-Write-Host "Por favor, proporciona la siguiente informacion (presiona Enter para aceptar el valor predeterminado):"
+Write-Host "Bienvenido al script de organización de archivos."
+Write-Host "Por favor, proporciona la siguiente información (presiona Enter para aceptar el valor predeterminado):"
 
 $sourceDirectoryInput = Read-Host "Ruta del directorio fuente (por defecto: '$sourceDirectory')"
 if (-not [string]::IsNullOrWhiteSpace($sourceDirectoryInput)) {
@@ -74,7 +74,7 @@ function Remove-EmptyDirectories {
     }
     if (-not (Get-ChildItem -Path $dir)) {
         Remove-Item -Path $dir -Force
-        Write-Log "Carpeta vacia eliminada: $dir"
+        Write-Log "Carpeta vacía eliminada: $dir"
         $global:totalEmptyFoldersDeleted++
     }
 }
@@ -91,7 +91,7 @@ function Get-DayName {
     param (
         [DateTime]$date
     )
-    $days = @("Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado")
+    $days = @("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado")
     return $days[$date.DayOfWeek.value__]
 }
 
@@ -149,15 +149,35 @@ function Organize-FilesByExtensionAndDate {
     }
 }
 
-Write-Log "Inicio de la organizacion de archivos en: $sourceDirectory"
+function Check-ManualFolders {
+    param (
+        [string]$directory
+    )
+    
+    $expectedPrefixes = @("01-Fotos", "02-Videos", "03-Documentos", "04-Musica", "05-RAW", "06-Otros", "07-Ejecutables", "08-Archivos_de_Sistema", "09-Bases_de_Datos", "10-Archivos_Web", "11-Archivos_de_Configuracion", "12-Archivos_de_Programacion")
+    
+    $folders = Get-ChildItem -Path $directory -Directory -Recurse
+    foreach ($folder in $folders) {
+        $folderName = $folder.Name
+        $folderPath = $folder.FullName
+        
+        if (-not ($expectedPrefixes -contains ($folderName -split '-')[0])) {
+            Write-Host "Subcarpeta no gestionada detectada: $folderPath"
+            Write-Log "Subcarpeta no gestionada detectada: $folderPath" "WARNING"
+        }
+    }
+}
 
+Write-Log "Inicio de la organización de archivos en: $sourceDirectory"
+
+Check-ManualFolders -directory $sourceDirectory
 Organize-FilesByExtensionAndDate -directory $sourceDirectory
 Remove-EmptyDirectories -dir $sourceDirectory
 
-Write-Log "Proceso de organizacion completado."
+Write-Log "Proceso de organización completado."
 
 # Mostrar estadísticas finales
 Write-Host "Resumen del proceso:"
 Write-Host "Total de carpetas creadas: $totalFoldersCreated"
 Write-Host "Total de archivos movidos: $totalFilesMoved"
-Write-Host "Total de carpetas vacias eliminadas: $totalEmptyFoldersDeleted"
+Write-Host "Total de carpetas vacías eliminadas: $totalEmptyFoldersDeleted"
