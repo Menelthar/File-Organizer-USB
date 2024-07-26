@@ -19,21 +19,21 @@ Estructura de Directorios
 
 Los archivos se organizarán en la siguiente estructura:
 DispositivoExterno/
-├── 01-Fotos/
-│   ├── 2024/
-│   │   ├── Enero/
-│   │   │   └── 01-Lunes/
-│   │   │       └── archivo.jpg
-│   │   └── Febrero/
-│   │       └── 02-Martes/
-│   │           └── archivo.png
-│   └── ...
-├── 02-Videos/
-│   └── ...
-├── 03-Documentos/
-│   └── ...
-└── logs/
-    └── OrganizeFilesLog.txt
+01-Fotos/
+    2024/
+        Enero/
+            01-Lunes/
+                archivo.jpg
+        Febrero/
+            02-Martes/
+                archivo.png
+    ...
+02-Videos/
+    ...
+03-Documentos/
+    ...
+logs/
+    OrganizeFilesLog.txt
 
 Mejoras Sugeridas
 
