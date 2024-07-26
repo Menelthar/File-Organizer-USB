@@ -115,10 +115,6 @@ Este script en PowerShell está diseñado para organizar archivos en un director
 
 Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
 
-## Contacto
-
-Para preguntas o comentarios, por favor contacta a [tu-email@dominio.com](mailto:tu-email@dominio.com).
-
 ---
 
 ¡Gracias por usar nuestro organizador de archivos! Esperamos que te sea de utilidad.
