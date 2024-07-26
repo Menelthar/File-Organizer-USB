@@ -3,8 +3,8 @@ param (
     [string]$logDirectory = "I:\logs"
 )
 
-Write-Host "Bienvenido al script de organización de archivos."
-Write-Host "Por favor, proporciona la siguiente información (presiona Enter para aceptar el valor predeterminado):"
+Write-Host "Bienvenido al script de organizacion de archivos."
+Write-Host "Por favor, proporciona la siguiente informacion (presiona Enter para aceptar el valor predeterminado):"
 
 $sourceDirectoryInput = Read-Host "Ruta del directorio fuente (por defecto: '$sourceDirectory')"
 if (-not [string]::IsNullOrWhiteSpace($sourceDirectoryInput)) {
@@ -28,7 +28,7 @@ Write-Host "Ruta del directorio de logs establecida en: $logDirectory"
 
 $logFile = Join-Path -Path $logDirectory -ChildPath "OrganizeFilesLog.txt"
 
-# Contadores para estadísticas
+# Contadores para estadisticas
 [int]$totalFoldersCreated = 0
 [int]$totalFilesMoved = 0
 [int]$totalEmptyFoldersDeleted = 0
@@ -74,7 +74,7 @@ function Remove-EmptyDirectories {
     }
     if (-not (Get-ChildItem -Path $dir)) {
         Remove-Item -Path $dir -Force
-        Write-Log "Carpeta vacía eliminada: $dir"
+        Write-Log "Carpeta vacia eliminada: $dir"
         $global:totalEmptyFoldersDeleted++
     }
 }
@@ -91,7 +91,7 @@ function Get-DayName {
     param (
         [DateTime]$date
     )
-    $days = @("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado")
+    $days = @("Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado")
     return $days[$date.DayOfWeek.value__]
 }
 
@@ -112,7 +112,7 @@ function Organize-FilesByExtensionAndDate {
             $modificationDate = $file.LastWriteTime
             $year = $modificationDate.Year
             $month = Get-MonthName -month $modificationDate.Month
-            $day = $modificationDate.Day.ToString("00") + "-" + (Get-DayName -date $modificationDate)
+            $day = $modificationDate.Day.ToString("00") # Formato de dos digitos para el dia
             $folder = switch ($extension) {
                 {$_ -in @("jpg", "jpeg", "png", "gif", "bmp", "tiff", "webp", "svg", "ico", "heic", "heif")} {"Fotos"}
                 {$_ -in @("mp4", "avi", "mov", "mkv", "flv", "wmv", "mpg", "mpeg", "webm", "3gp", "rm", "rmvb", "ts", "ogv", "m4v")} {"Videos"}
@@ -168,16 +168,14 @@ function Check-ManualFolders {
     }
 }
 
-Write-Log "Inicio de la organización de archivos en: $sourceDirectory"
+Write-Log "Inicio de la organizacion de archivos en: $sourceDirectory"
 
 Check-ManualFolders -directory $sourceDirectory
 Organize-FilesByExtensionAndDate -directory $sourceDirectory
 Remove-EmptyDirectories -dir $sourceDirectory
 
-Write-Log "Proceso de organización completado."
-
-# Mostrar estadísticas finales
-Write-Host "Resumen del proceso:"
+Write-Host "Organizacion completada."
+Write-Log "Organizacion completada."
 Write-Host "Total de carpetas creadas: $totalFoldersCreated"
 Write-Host "Total de archivos movidos: $totalFilesMoved"
-Write-Host "Total de carpetas vacías eliminadas: $totalEmptyFoldersDeleted"
+Write-Host "Total de carpetas vacias eliminadas: $totalEmptyFoldersDeleted"
