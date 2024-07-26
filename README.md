@@ -75,9 +75,15 @@ Este script en PowerShell está diseñado para organizar archivos en un director
   - `$message`: Mensaje a registrar.
   - `$level`: Nivel del log ("INFO", "ERROR").
 
+### `Check-ManualFolders`
+
+- **Descripción:** Verifica la existencia de carpetas manuales que no siguen el formato estándar. Marca las carpetas que no cumplen con el formato esperado con una advertencia en el archivo de log.
+- **Parámetros:**
+  - `$directory`: Ruta del directorio donde se verificarán las carpetas.
+
 ## Carpetas Manuales
 
-El script verifica si hay subcarpetas manuales (que no siguen el formato estándar) y las marca con una advertencia en el archivo de log. Las carpetas manuales son aquellas que no tienen un prefijo numérico en su nombre o no siguen la estructura de nombres esperada.
+El script identifica carpetas manuales que no siguen el formato estándar. Las carpetas manuales son aquellas que no tienen un prefijo numérico en su nombre o no cumplen con la estructura de nombres esperada. Estas carpetas se registran en el archivo de log con una advertencia para que puedan ser revisadas y ajustadas según sea necesario.
 
 ## Puntos de Mejora
 
