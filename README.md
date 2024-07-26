@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Este script en PowerShell está diseñado para organizar archivos en un directorio fuente clasificándolos por tipo y fecha de modificación. Los archivos se mueven a subcarpetas creadas automáticamente en función de su extensión y la fecha de última modificación. El script también elimina carpetas vacías y genera un archivo de registro detallado que documenta todas las acciones realizadas.
+Este script en PowerShell está diseñado para organizar archivos en un directorio fuente clasificándolos por tipo y fecha de modificación. Los archivos se mueven a subcarpetas creadas automáticamente en función de su extensión y la fecha de última modificación. El script también elimina carpetas vacías y genera un archivo de registro detallado que documenta todas las acciones realizadas. Además, identifica y registra carpetas manuales que no siguen el formato estándar.
 
 ## Requisitos
 
@@ -74,6 +74,10 @@ Este script en PowerShell está diseñado para organizar archivos en un director
 - **Parámetros:**
   - `$message`: Mensaje a registrar.
   - `$level`: Nivel del log ("INFO", "ERROR").
+
+## Carpetas Manuales
+
+El script verifica si hay subcarpetas manuales (que no siguen el formato estándar) y las marca con una advertencia en el archivo de log. Las carpetas manuales son aquellas que no tienen un prefijo numérico en su nombre o no siguen la estructura de nombres esperada.
 
 ## Puntos de Mejora
 
